@@ -2,10 +2,15 @@ import requests
 from lxml import etree
 
 
-url = "http://1.82.133.119:8082/opac/browse/query?category=cls&id=1671"
+# url = "http://1.82.133.119:8082/opac/browse/query?category=cls&id=1671"
 
-# this is empty
-# url = "http://1.82.133.119:8082/opac/browse/query?category=cls&id=1686"
+# this is init url
+# url = "http://1.82.133.119:8082/opac/browse/query?category=cls&id=0"
+
+# this is an empry url
+url = "http://1.82.133.119:8082/opac/browse/query?category=cls&id=1686"
+
+
 
 
 def getChildId(url):
@@ -52,13 +57,24 @@ def saveXmls(url):
     
     return 
     
-
-
 # idList = getChildId(url)
+#     currnetUrl
+#     saveXmls(currnetUrl)
 
-# print(idList)
+idList = getChildId(url)
+if idList == []:
+    print("this is em")
 
-saveXmls(url)
+if getChildId(url) != []:
+    for i in getChildId(url):
+        idList.append(i)
+
+if getChildId(url) != []:
+    for i in getChildId(url):
+        idList.append(i)
+        callSlef()
+else:
+    
 
 
 

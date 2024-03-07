@@ -68,12 +68,14 @@ def urlTurnId(url):
 
 def getAll(url):
 
-    # time.sleep(0.5)
+    time.sleep(0.5)
 
     parentId = urlTurnId(url)
     childIdList = getChildId(url)
 
-    if childIdList == []:
+    # if childIdList == []:
+    # 问题好像应该是这样
+    if len(childIdList) == 1:
         saveXmls(idTurnUrl(parentId))
         # 问题是--当 ==[]时,parent早已为0了,这是为什么,与怎么办
         # print("get one, its id is  " + str(parentId))

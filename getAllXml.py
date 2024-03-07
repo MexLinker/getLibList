@@ -2,6 +2,7 @@ import requests
 from lxml import etree
 import time
 
+# add git ignore
 
 # realUrl = "http://1.82.133.119:8082/opac/browse/query?category=cls&id=1671"
 

@@ -3,10 +3,10 @@ from lxml import etree
 import time
 
 
-realUrl = "http://1.82.133.119:8082/opac/browse/query?category=cls&id=1671"
+# realUrl = "http://1.82.133.119:8082/opac/browse/query?category=cls&id=1671"
 
 # this is init url
-# url = "http://1.82.133.119:8082/opac/browse/query?category=cls&id=0"
+realUrl = "http://1.82.133.119:8082/opac/browse/query?category=cls&id=0"
 
 # this is an empry url
 # url = "http://1.82.133.119:8082/opac/browse/query?category=cls&id=1686"
@@ -50,7 +50,7 @@ def saveXmls(url):
 
         with open(realPath, "wb") as file:
             file.write(content)
-            print("writed success")
+            print("writed " +realPath+ " success")
         
     else:
         print("response!=200")
@@ -68,14 +68,15 @@ def urlTurnId(url):
 
 def getAll(url):
 
-    time.sleep(0.5)
+    # time.sleep(0.5)
 
     parentId = urlTurnId(url)
     childIdList = getChildId(url)
 
     if childIdList == []:
         saveXmls(idTurnUrl(parentId))
-        print("get one, its id is" + str(parentId))
+        # 问题是--当 ==[]时,parent早已为0了,这是为什么,与怎么办
+        # print("get one, its id is  " + str(parentId))
         return
     else:
         for i in childIdList:

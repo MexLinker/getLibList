@@ -17,9 +17,9 @@ import os
 # realUrl = "http://1.82.133.119:8082/opac/browse/query?category=cls&id=1671"
 
 # this is init url
-# realUrl = "http://1.82.133.119:8082/opac/browse/query?category=cls&id=0"
+realUrl = "http://1.82.133.119:8082/opac/browse/query?category=cls&id=0"
 # this is its childen
-realUrl = "http://1.82.133.119:8082/opac/browse/query?category=cls&id=2"
+# realUrl = "http://1.82.133.119:8082/opac/browse/query?category=cls&id=2"
 
 # this is an empry url
 # url = "http://1.82.133.119:8082/opac/browse/query?category=cls&id=1686"
@@ -81,21 +81,21 @@ def urlTurnId(url):
 
 def getAll(url):
 
-    time.sleep(0.2)
+    time.sleep(0.4)
 
     parentId = urlTurnId(url)
     childIdList = getChildId(url)
+
+    parentParentId = getParentId(idTurnUrl(parentId))
+    if ifFileExist(parentParentId) == False and parentParentId != 0:
+        saveXmls(idTurnUrl(parentParentId))
+        print("saved parent")
 
     # if childIdList == []:
     # 问题好像应该是这样
     if len(childIdList) == 1:
         saveXmls(idTurnUrl(parentId))
-    
-        parentParentId = getParentId(parentId)
-        if ifFileExist(parentParentId) == False:
-            saveXmls(idTurnUrl(parentParentId))
-            print("saved parent")
-        
+   
         return
     else:
         for i in childIdList:
@@ -111,9 +111,11 @@ def ifFileExist(id):
 
 def getParentId(url):
     
-    pId = []
+    # pId = []
 
     response  = requests.get(url)
+    
+    pId = 0
     
     if response.status_code == 200:
         root = etree.fromstring(response.content)
@@ -128,9 +130,10 @@ def getParentId(url):
     return pId
 
 
-print(getParent(realUrl))
 
-# getAll(realUrl)
+
+getAll(realUrl)
+
 
 
 

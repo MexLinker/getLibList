@@ -2,6 +2,8 @@
 # 命令行以21634结束，共获219个文件
 # 发现问题——只获得了最后一级的文件，尝试修改
 # 修改ing
+# 添加儿子存在检测；再次跑之前1094个项目
+# 
 
 import sys  # 导入sys模块
 sys.setrecursionlimit(5000)  # 将默认的递归深度修改为3000
@@ -81,20 +83,22 @@ def urlTurnId(url):
 
 def getAll(url):
 
-    time.sleep(0.4)
+    # time.sleep(4)
 
     parentId = urlTurnId(url)
     childIdList = getChildId(url)
 
     parentParentId = getParentId(idTurnUrl(parentId))
-    if ifFileExist(parentParentId) == False and parentParentId != 0:
+    if ifFileExist(parentParentId) == False and parentParentId != 999999999:
         saveXmls(idTurnUrl(parentParentId))
-        print("saved parent")
+        print("saved parentparent")
 
     # if childIdList == []:
     # 问题好像应该是这样
     if len(childIdList) == 1:
-        saveXmls(idTurnUrl(parentId))
+        if ifFileExist(parentId) == False and parentId != 999999999:
+            print("saved parent")
+            saveXmls(idTurnUrl(parentId))
    
         return
     else:
@@ -115,7 +119,8 @@ def getParentId(url):
 
     response  = requests.get(url)
     
-    pId = 0
+    # just for differ
+    pId = 999999999
     
     if response.status_code == 200:
         root = etree.fromstring(response.content)

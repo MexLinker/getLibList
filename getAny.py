@@ -1,10 +1,4 @@
-# 上次收获38个xml到达最深递归，这次直接提高，看他会不会stackOverFlow
-# 命令行以21634结束，共获219个文件
-# 发现问题——只获得了最后一级的文件，尝试修改
-# 修改ing
-# 添加儿子存在检测；再次跑之前1094个项目
-# 跑之后1815个，报错“sock = connection.create_connection”，明显是网络环境的问题
-# 再跑试试 4007个项目，牛皮的
+# getAny.py can get any library's list by change the path
 
 import sys  # 导入sys模块
 sys.setrecursionlimit(5000)  # 将默认的递归深度修改为3000
@@ -15,17 +9,14 @@ import time
 
 import os
 
-# add git ignore
+# for 武汉城市圈图书馆 using xmlFiles_WH
+global path 
+path = ".\\xmlFiles_WH\\"
 
-# realUrl = "http://1.82.133.119:8082/opac/browse/query?category=cls&id=1671"
+# realUrl = "http://1.82.133.119:8082/opac/browse/query?category=cls&id=0"
+realUrl = "http://interlib.library.hb.cn:8008/opac/browse/query?category=cls&id=0"
+# 发现开始的initUrl只有域名与端口换了，剩下的一样
 
-# this is init url
-realUrl = "http://1.82.133.119:8082/opac/browse/query?category=cls&id=0"
-# this is its childen
-# realUrl = "http://1.82.133.119:8082/opac/browse/query?category=cls&id=2"
-
-# this is an empry url
-# url = "http://1.82.133.119:8082/opac/browse/query?category=cls&id=1686"
 
 
 
@@ -53,7 +44,7 @@ def getChildId(url):
 
 def saveXmls(url):
 
-    path = ".\\xmlFiles\\"
+    # path = ".\\xmlFiles\\"
 
     index = url.find("id=")
     fileNameWihtOutpPostfix = url[index + len("id="):]
@@ -109,7 +100,7 @@ def getAll(url):
             getAll(idTurnUrl(i))
 
 def ifFileExist(id):
-    path = ".\\xmlFiles\\"
+    # path = ".\\xmlFiles\\"
     realPath = path + str(id) + ".xml"
 
     print(realPath)
